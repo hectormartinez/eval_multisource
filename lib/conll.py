@@ -248,6 +248,46 @@ class DependencyTree(nx.DiGraph):
                     countNonProjectiveRelation+=1
         return countNonProjectiveRelation == 0
 
+    def non_projectivity_edge_info(self):
+        countProjectiveRelation = 0
+        countNonProjectiveRelation = 0
+        punctNonProj = 0
+
+        deppos_counter = Counter()
+        deppos_left_counter = Counter()
+
+        dependents = Counter()
+        gapdegrees =  Counter()
+
+
+        for i, j in self.edges():
+            # i = instance[edge]
+            # j = edge
+            head = i
+            if j < i:
+                i, j = j, i
+            for k in range(i + 1,j):
+                headk = self.head_of(k)
+                if i <= headk <= j or j <= headk <= i:
+                    projEdge = True
+                    countProjectiveRelation += 1
+                else:
+                    # print("non-projective")
+                    # print("{} <= {} <= {} ? ".format(i,headk,j))
+                    isProjective = False
+                    countNonProjectiveRelation += 1
+                    dependents[self.node[k]['cpostag']]+=1
+                    gapdegrees[abs(k-headk)]=+1
+                    gapdegrees[abs(i-j)]=+1
+                    if i == head:
+                        dependents[self.node[j]['cpostag']] += 1
+                    else:
+                        dependents[self.node[i]['cpostag']] += 1
+
+        return dependents,gapdegrees
+
+
+
     def punct_proj_violations(self):
         countProjectiveRelation=0
         countNonProjectiveRelation=0
@@ -280,6 +320,8 @@ class DependencyTree(nx.DiGraph):
                 viol+=1
         return viol,len(self.nodes())
 
+    def POS_list(self):
+        return [self.node[x]["cpostag"] for x in self.nodes()[1:]]
 
 
 
