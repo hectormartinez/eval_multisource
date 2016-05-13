@@ -48,7 +48,7 @@ def main():
     edgelenths = [GAPDEGREECOUNTER[l]/sum(GAPDEGREECOUNTER.values()) for l in EDGELENGTHS]
     otherlength = sum([GAPDEGREECOUNTER[l]/sum(GAPDEGREECOUNTER.values()) for l in GAPDEGREECOUNTER.keys() if l not in EDGELENGTHS])
     #print(Counter(PROJLIST),DEPCHILDCOUNTER.most_common(),GAPDEGREECOUNTER.most_common())
-    print("\t".join([str(x) for x in [projpercent]+deppercent+edgelenths+[otherlength]]))
+    print("\t".join([str(x) for x in ["",projpercent]+deppercent+edgelenths+[otherlength]]))
 
 
 if __name__ == "__main__":
