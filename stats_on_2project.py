@@ -43,10 +43,10 @@ def main():
         DEPCHILDCOUNTER+=localdependentcounter
         GAPDEGREECOUNTER+=gapdegreecounter
 
-    projpercent=PROJCOUNTER[True]/sum(PROJCOUNTER.values())
-    deppercent=[DEPCHILDCOUNTER[posname]/sum(DEPCHILDCOUNTER.values()) for posname in POSLIST]
-    edgelenths = [GAPDEGREECOUNTER[l]/sum(GAPDEGREECOUNTER.values()) for l in EDGELENGTHS]
-    otherlength = sum([GAPDEGREECOUNTER[l]/sum(GAPDEGREECOUNTER.values()) for l in GAPDEGREECOUNTER.keys() if l not in EDGELENGTHS])
+    projpercent=round(PROJCOUNTER[True]/sum(PROJCOUNTER.values()),2)
+    deppercent=[round(DEPCHILDCOUNTER[posname]/sum(DEPCHILDCOUNTER.values()),2) for posname in POSLIST]
+    edgelenths = [round(GAPDEGREECOUNTER[l]/sum(GAPDEGREECOUNTER.values()),2) for l in EDGELENGTHS]
+    otherlength = round(sum([GAPDEGREECOUNTER[l]/sum(GAPDEGREECOUNTER.values()) for l in GAPDEGREECOUNTER.keys() if l not in EDGELENGTHS]),2)
     #print(Counter(PROJLIST),DEPCHILDCOUNTER.most_common(),GAPDEGREECOUNTER.most_common())
     print("\t".join([str(x) for x in ["",projpercent]+deppercent+edgelenths+[otherlength]]))
 
